@@ -1,11 +1,82 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+    --color-navy-50: #f0f2f8;
+    --color-navy-100: #d9deec;
+    --color-navy-200: #b3bcd9;
+    --color-navy-300: #8593bd;
+    --color-navy-400: #4f5f95;
+    --color-navy-500: #2d3f74;
+    --color-navy-600: #1a2b56;
+    --color-navy-700: #15234a;
+    --color-navy-800: #121d3a;
+    --color-navy-900: #0f172a;
+
+    --color-yellow-brand: #f5eb5e;
+    --color-yellow-brand-dark: #e6dc4a;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans bg-slate-50 text-slate-700 antialiased;
+    }
+}
+
+@layer components {
+    .mu-container {
+        @apply mx-auto w-[90%] max-w-[1200px] px-5;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-xl bg-navy-600 px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-navy-800 hover:shadow-lg hover:shadow-navy-600/20;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center rounded-xl border-2 border-navy-600 px-6 py-2.5 font-bold text-navy-600 transition hover:bg-navy-600/5;
+    }
+
+    .btn-yellow {
+        @apply inline-flex items-center justify-center rounded-lg bg-yellow-brand px-10 py-4 text-lg font-bold text-navy-600 transition hover:-translate-y-0.5 hover:bg-yellow-brand-dark hover:shadow-lg;
+    }
+
+    /* Shared admin form control styling — kept in 1 place to stay DRY */
+    .admin-input,
+    .admin-input-select {
+        @apply w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-600;
+    }
+
+    .admin-input-select {
+        @apply appearance-none bg-no-repeat pr-10;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+        background-position: right 0.75rem center;
+        background-size: 1.25rem;
+    }
+}
+
+/* Hide elements with x-cloak until Alpine processes them */
+[x-cloak] { display: none !important; }
+
+@layer utilities {
+    .marquee-track {
+        animation: marquee-scroll 25s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-50% - 30px));
+        }
+    }
 }

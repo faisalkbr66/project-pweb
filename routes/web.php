@@ -2,34 +2,39 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/laravel', function () {
-//     return view('welcome');
-// });
+Route::view('/', 'home')->name('home');
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
+Route::view('/produk', 'produk')->name('produk');
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/tentang-kami/profil-mentor', function () {
+    return view('profil-mentor');
+})->name('about.mentor');
+
+Route::get('/info-lomba', function () {
+    return view('info-lomba');
+})->name('lomba');
+
+Route::get('/dashboard/keranjang', function () {
+    return view('dashboard.keranjang');
+})->name('dashboard.cart');
+
+Route::view('/login', 'login')->name('login');
+Route::view('/register', 'register')->name('register');
+
+Route::prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::view('/', 'dashboard.index')->name('index');
+    Route::view('/transactions', 'dashboard.transactions')->name('transactions');
+
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::view('/', 'dashboard.profile.index')->name('index');
+        Route::view('/password', 'dashboard.profile.password')->name('password');
+    });
 });
 
-Route::get('/about', function () {
-    return view('about');
-});
-
-// Route::get('/blog', function () {
-//     return view('blog');
-// });
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-Route::get('/product', function () {
-    return view('product');
-});
-
-Route::get('/login-page', function () {
-    return view('masuk');
-});
-
-Route::get('/sign-in-page', function () {
-    return view('sign-in-page');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::redirect('/', '/admin/products');
+    Route::view('/products', 'admin.products.index')->name('products.index');
+    Route::view('/competitions', 'admin.competitions.index')->name('competitions.index');
+    Route::view('/users', 'admin.users.index')->name('users.index');
 });
